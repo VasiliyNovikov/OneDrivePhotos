@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.7.34024.191
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OneDrivePhotos", "OneDrivePhotos.csproj", "{78653E0A-27A8-4D53-9EDA-4F0B20577DD8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OneDrivePhotos", "OneDrivePhotos.csproj", "{81752642-5CBA-4B5C-98A0-EC7EDF714AFC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,17 +11,17 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{78653E0A-27A8-4D53-9EDA-4F0B20577DD8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{78653E0A-27A8-4D53-9EDA-4F0B20577DD8}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{78653E0A-27A8-4D53-9EDA-4F0B20577DD8}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
-		{78653E0A-27A8-4D53-9EDA-4F0B20577DD8}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{78653E0A-27A8-4D53-9EDA-4F0B20577DD8}.Release|Any CPU.Build.0 = Release|Any CPU
-		{78653E0A-27A8-4D53-9EDA-4F0B20577DD8}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{81752642-5CBA-4B5C-98A0-EC7EDF714AFC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{81752642-5CBA-4B5C-98A0-EC7EDF714AFC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{81752642-5CBA-4B5C-98A0-EC7EDF714AFC}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{81752642-5CBA-4B5C-98A0-EC7EDF714AFC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{81752642-5CBA-4B5C-98A0-EC7EDF714AFC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{81752642-5CBA-4B5C-98A0-EC7EDF714AFC}.Release|Any CPU.Deploy.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {8379A486-E8E5-4D1C-9302-352A84C85F6F}
+		SolutionGuid = {344F8ADC-0E05-4D88-B621-65F8A708AD8B}
 	EndGlobalSection
 EndGlobal

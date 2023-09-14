@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest package="com.companyname.OneDrivePhotos" version="1.0.0" api-version="7" xmlns="http://tizen.org/ns/packages">
+    <author email="vasiliy.novikov@outlook.com" href="https://github.com/VasiliyNovikov">Vasyl Novikov</author>
+    <profile name="common" />
+    <ui-application appid="com.companyname.OneDrivePhotos"
+					exec="OneDrivePhotos.dll"
+					multiple="false"
+					nodisplay="false"
+					taskmanage="true"
+					type="dotnet"
+					launch_mode="single">
+        <label>OneDrivePhotos</label>
+        <icon>OneDrivePhotos.png</icon>
+        <metadata key="http://tizen.org/metadata/prefer_dotnet_aot" value="true" />
+        <splash-screens />
+    </ui-application>
+    <shortcut-list />
+    <dependencies />
+    <provides-appdefined-privileges />
+</manifest>
