@@ -1,4 +1,5 @@
-using System;
+using System.Threading;
+using Tizen.Applications;
 using Tizen.NUI;
 using Tizen.NUI.BaseComponents;
 using Tizen.NUI.Components;
@@ -15,7 +16,8 @@ namespace OneDrivePhotos
         };
 
         private View _loginView;
-        private Button _loginButton;
+        private TextLabel _loginCode;
+        private TextLabel _loginUrl;
 
         private View _presentationView;
 
@@ -25,21 +27,37 @@ namespace OneDrivePhotos
         private Button _nextButton;
         private Button _prevButton;
 
+        private OneDriveService _oneDriveService;
+
         protected override void OnCreate()
         {
             base.OnCreate();
             Initialize();
         }
 
-        private void Initialize()
+        private async void Initialize()
         {
             var window = Window.Instance;
             window.KeyEvent += OnKeyEvent;
             CreateLoginView(window);
             CreatePresentationView(window);
 
-            _loginView.Show();
-            FocusManager.Instance.SetCurrentFocusView(_loginButton);
+            var syncContext = SynchronizationContext.Current;
+
+            _oneDriveService = await OneDriveAuthenticationService.Authenticate(info =>
+            {
+                syncContext.Send(_ =>
+                {
+                    _loginCode.Text = info.UserCode;
+                    _loginUrl.Text = info.VerificationUri.ToString();
+                    _loginView.Show();
+                }, null);
+            });
+
+            _loginView.Hide();
+            _presentationView.Show();
+            FocusManager.Instance.SetCurrentFocusView(_nextButton);
+            UpdateCurrentImage();
         }
 
         private void CreatePresentationView(Window window)
@@ -106,31 +124,31 @@ namespace OneDrivePhotos
                 Size = new Size(window.Size.Width, window.Size.Height),
                 Position = new Position(0, 0),
                 BackgroundColor = Color.Black,
-                Focusable = true,
-                Layout = new AbsoluteLayout()
+                Layout = new LinearLayout
+                {
+                    LinearOrientation = LinearLayout.Orientation.Vertical,
+                    VerticalAlignment = VerticalAlignment.Center,
+                    HorizontalAlignment = HorizontalAlignment.Center,
+                    CellPadding = new Size2D(20, 20),
+                },
             };
 
-            _loginButton = new Button
+            _loginCode = new TextLabel
             {
-                Text = "Login",
-                Position = new Position(window.Size.Width / 4, window.Size.Height / 2),
-                Size = new Size(window.Size.Width / 2, 100),
-                BackgroundColor = new Color(0, 0, 0, 0.5f),
+                HorizontalAlignment = HorizontalAlignment.Center,
                 TextColor = Color.White,
             };
-            _loginButton.Clicked += OnLogin;
-            _loginView.Add(_loginButton);
+            _loginView.Add(_loginCode);
+
+            _loginUrl = new TextLabel
+            {
+                HorizontalAlignment = HorizontalAlignment.Center,
+                TextColor = Color.White,
+            };
+            _loginView.Add(_loginUrl);
 
             _loginView.Hide();
             window.Add(_loginView);
-        }
-
-        private void OnLogin(object sender, EventArgs e)
-        {
-            _loginView.Hide();
-            _presentationView.Show();
-            FocusManager.Instance.SetCurrentFocusView(_nextButton);
-            UpdateCurrentImage();
         }
 
         private void UpdateCurrentImage()
