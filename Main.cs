@@ -15,10 +15,6 @@ namespace OneDrivePhotos
             "starfield.jpg",
         };
 
-        private View _loginView;
-        private TextLabel _loginCode;
-        private TextLabel _loginUrl;
-
         private View _presentationView;
 
         private int _currentImageIndex = 0;
@@ -39,23 +35,23 @@ namespace OneDrivePhotos
         {
             var window = Window.Instance;
             window.KeyEvent += OnKeyEvent;
-            CreateLoginView(window);
-            CreatePresentationView(window);
 
             var syncContext = SynchronizationContext.Current;
 
+            LoginView loginView = null;
             _oneDriveService = await OneDriveAuthenticationService.Authenticate(info =>
             {
                 syncContext.Send(_ =>
                 {
-                    _loginCode.Text = info.UserCode;
-                    _loginUrl.Text = info.VerificationUri.ToString();
-                    _loginView.Show();
+                    loginView = new LoginView(window, info.UserCode, info.VerificationUri.ToString());
                 }, null);
             });
 
-            _loginView.Hide();
-            _presentationView.Show();
+            if (loginView != null)
+                window.Remove(loginView);
+
+            CreatePresentationView(window);
+
             FocusManager.Instance.SetCurrentFocusView(_nextButton);
             UpdateCurrentImage();
         }
@@ -113,42 +109,7 @@ namespace OneDrivePhotos
             _prevButton.RightFocusableView = _nextButton;
             _nextButton.LeftFocusableView = _prevButton;
 
-            _presentationView.Hide();
             window.Add(_presentationView);
-        }
-
-        private void CreateLoginView(Window window)
-        {
-            _loginView = new View
-            {
-                Size = new Size(window.Size.Width, window.Size.Height),
-                Position = new Position(0, 0),
-                BackgroundColor = Color.Black,
-                Layout = new LinearLayout
-                {
-                    LinearOrientation = LinearLayout.Orientation.Vertical,
-                    VerticalAlignment = VerticalAlignment.Center,
-                    HorizontalAlignment = HorizontalAlignment.Center,
-                    CellPadding = new Size2D(20, 20),
-                },
-            };
-
-            _loginCode = new TextLabel
-            {
-                HorizontalAlignment = HorizontalAlignment.Center,
-                TextColor = Color.White,
-            };
-            _loginView.Add(_loginCode);
-
-            _loginUrl = new TextLabel
-            {
-                HorizontalAlignment = HorizontalAlignment.Center,
-                TextColor = Color.White,
-            };
-            _loginView.Add(_loginUrl);
-
-            _loginView.Hide();
-            window.Add(_loginView);
         }
 
         private void UpdateCurrentImage()
